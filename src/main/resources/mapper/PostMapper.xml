@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.springbootmybatis.repository.PostMapper">
+    <!--  모든 user data 출력  -->
+    <select id="selectAllPosts"
+            resultType="com.example.springbootmybatis.entity.Users">
+        select id, name, email, createAt from users
+        order by createAt desc
+    </select>
+    <!--  특정 id를 사용해 user data 출력  -->
+    <select id="selectPostById"
+            resultType="com.example.springbootmybatis.entity.Posts"
+            parameterType="int">
+        select id, user_id, title, contents, del_yn, createdAt from posts
+        where id=#{id}
+    </select>
+    <insert id="insertPost"
+            parameterType="com.example.springbootmybatis.entity.Posts">
+        insert into posts(id, user_id, title, contents, del_yn) values(#{id},#{user_id},#{title},#{contents},#{del_yn})
+    </insert>
+    <update id="updatePost">
+        update posts set user_id=#{user_id}, title=#{title}, contents=#{contents}, del_yn=#{del_yn} where  id=#{id}
+    </update>
+    <delete id="deletePost">
+        delete from posts where id=#{id}
+    </delete>
+</mapper>
